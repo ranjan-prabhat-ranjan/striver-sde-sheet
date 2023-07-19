@@ -1,0 +1,82 @@
+class Solution {   //strivers // optimal method <to optimise issafe function> [using hashing]  //SEE BRUTE FORCE SOLUTION BEFORE
+/*
+public:   //THIS PART IS BEING OPTIMISED
+    bool isSafe(int row,int col,vector<string> &board,int n){
+        int duprow = row;
+        int dupcol = col;
+        //there is only three possibe case where we need to check //check strivers
+        //  \(right up) , -(left) ,/(right down)
+        //if at above three positions queen is present , then now it's not safe to place
+
+        //case 1
+        while(row>=0 && col>=0){
+            if(board[row][col]=='Q'){
+                return false;
+            }
+                row--;
+                col--;
+        }
+
+        //case 2
+        col=dupcol;
+        row=duprow;
+        while(col>=0){
+            if(board[row][col]=='Q'){
+                return false;
+            }
+                col--;
+        }
+
+
+        //case 3
+        col=dupcol;
+        row=duprow;
+        while(row<n && col>=0){
+            if(board[row][col]=='Q'){
+                return false;
+            }
+                row++;
+                col--;
+        }
+        return true;
+    }
+*/
+public: 
+    void solve(int col,vector<string> &board,vector<vector<string>> &ans,vector<int> & leftRow, vector<int> & upperDiagonal , vector<int> & lowerDiagonal , int n){
+        if(col==n){
+            ans.push_back(board);
+            return;
+        }
+        for(int row=0;row<n;row++){
+            if(leftRow[row]==0 && lowerDiagonal[row+col]==0 && upperDiagonal[n-1 + col - row]==0){
+                board[row][col]='Q';
+                leftRow[row]=1;  //MAKING HASHES MARKED that represents that now that position is taken by 'Q'
+                lowerDiagonal[row+col]=1;  //MAKING HASHES MARKED 
+                upperDiagonal[n-1 + col - row]=1;//MAKING HASHES MARKED 
+                solve(col+1,board,ans,leftRow,upperDiagonal,lowerDiagonal,n);
+                board[row][col]='.';  //bactracking property-> removing 'Q' before coming back from recursion
+                leftRow[row]=0;  //MAKING HASHES UNMARKED 
+                lowerDiagonal[row+col]=0;  //MAKING HASHES UNMARKED 
+                upperDiagonal[n-1 + col - row]=0; //MAKING HASHES UNMARKED 
+            }
+        }
+    }
+    
+
+
+
+
+public:    //strivers // optimal method <to optimise issafe function> [using hashing]
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> ans;
+        vector<string> board(n);  //size n
+        string s(n,'.'); //n size having initial value '.'
+        for(int i=0;i<n;i++){
+            board[i]=s;   //putting '.' as initial value whole accross the board
+        }
+
+        vector<int> leftRow(n,0) , upperDiagonal(2*n-1 , 0), lowerDiagonal(2*n-1 , 0);// -(left), \(right up) ,/(right down)  //(n,0) means (size , initialize all with 0)
+        solve(0,board,ans,leftRow,upperDiagonal,lowerDiagonal,n);
+        return ans;
+    }
+};
