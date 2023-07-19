@@ -1,0 +1,54 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.length()<=1){
+            return s;        // if only one character then its the ans.
+        }
+        int max_length=1;   //here it is = 1 as single character itself will be ans
+        int n = s.length();
+        int start=0;
+        int end = 0;
+
+        //odd length
+        for(int i=0;i<n;i++){
+            int left=i,right=i;   // here we start with single element 'babad' only one middle element
+            while(left>=0 && right<s.length()){
+               if(s[left]==s[right]){
+                   left--;
+                   right++;
+               }
+               else{
+                   break;
+               }
+               int length = right - left - 1;
+                if(length>max_length){
+                    max_length=length;
+                    start=left+1;   // when comparing we'll have our start and end at two diff letters so we need to shift them to same letters
+                    end=right-1;
+                }
+            }
+        }
+
+        //even length
+        for(int i=0;i<n;i++){
+            int left=i,right=i+1;
+            while(left>=0 && right<s.length()){
+               if(s[left]==s[right]){
+                   left--;
+                   right++;
+               }
+               else{
+                   break;
+               }
+               int length = right - left - 1;
+                if(length>max_length){
+                    max_length=length;
+                    start=left+1;
+                    end=right-1;
+                }
+            }
+        }
+
+        return s.substr(start,max_length);
+    }
+};
