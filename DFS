@@ -1,0 +1,28 @@
+class Solution {    //dfs
+    
+    private:
+        void dfs(int node, vector<int> adj[] , int vis[], vector<int> & ls ){
+            vis[node] = 1;  //first make that starting node visited
+            ls.push_back(node); //storing the node in list
+            // traversing all its neighbours
+            for(auto it : adj[node]){
+                if(!vis[it]){  //if the neighbours are not yet visited then we will traverse that.
+                    dfs(it,adj,vis,ls);
+                }
+            }
+        
+            
+        }
+    
+  public:
+    // Function to return a list containing the DFS traversal of the graph.
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        // Code here
+        int vis[V]={0};//making a visited array of n size(since 0-based indexing) and initialising it with zero
+        int start = 0;  //start index (from where traversal isto be done) 
+        vector<int> ls;  //creting a list in order to store the dfs
+        dfs(start,adj,vis,ls);
+        return ls;
+        
+    }
+};
