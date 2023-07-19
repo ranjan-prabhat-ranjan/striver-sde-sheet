@@ -1,0 +1,31 @@
+class Solution {  //BINARY SEARCH APPROACH
+public:
+    int search(vector<int>& nums, int target) {
+        int start=0;
+        int end = nums.size()-1;
+        int mid = start+(end-start)/2;  // or mid = (start+end)/2;
+        while(start<=end){
+            mid = start+(end-start)/2;    // or mid = (start+end)/2;
+            if(target==nums[mid]){
+                return mid;
+            }
+            if(nums[start]<=nums[mid]){//If the left half of the array is sorted,
+                if(nums[start]<=target && nums[mid]>=target){
+                    end=mid-1;//checks if the target lies between the start and the mid, and updates the end pointer accordingly
+                }
+                else{
+                    start=mid+1;//otherwise checks if the target lies between mid and end, and updates the start pointer accordingly.
+                }
+            }
+            else{//If the right half of the array is sorted
+                if(nums[end]>=target && nums[mid]<=target){
+                    start=mid+1;// checks if the target lies between mid and end, and updates the start pointer accordingly.
+                }
+                else{
+                    end=mid-1;//otherwise checks if the target lies between start and mid, and updates the end pointer accordingly.
+                }
+            }
+        }
+        return -1;
+    }
+};
