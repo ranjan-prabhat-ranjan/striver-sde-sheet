@@ -1,0 +1,28 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {           
+public:
+    bool hasCycle(ListNode *head) {
+        if(head==NULL || head->next==NULL){   //if head is null OR our linked list consist of single element ; then we can't able to find any cycle
+            return false;
+        }
+        ListNode* slow = head;
+        ListNode* fast = head;
+        // if our LL is linear then answer will be false since cycle can't be form in this type .   1. standing at the last node(i.e here fast->next will be null)   2. standing at the second last node ((i.e here fast->next->next will be null))
+        while(fast->next && fast->next->next){
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast==slow){  //it means they are pointing to the same node SO we can say that there was a cycle that's why this is happening
+                return true;
+            }
+        }
+        return false;
+
+    }
+};
