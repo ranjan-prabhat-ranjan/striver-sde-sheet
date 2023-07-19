@@ -1,0 +1,34 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+
+
+// SEE  ques: 141.LINKED LIST CYCLE
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(head==NULL || head->next==NULL){   //if head is null OR our linked list consist of single element ; then our LL can not be a cycle
+            return NULL;
+        }
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* entry = head;
+        while(fast->next && fast->next->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow==fast){  //it means there is a cycle
+                while(slow!=entry){    //found the entry loccation
+                    slow = slow->next;
+                    entry = entry->next;
+                }
+                return entry;   //returning the collision point of our LL
+            }
+        }
+        return NULL;  //it means there is never ever a cycle
+    }
+};
