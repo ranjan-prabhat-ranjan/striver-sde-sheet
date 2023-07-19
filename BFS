@@ -1,0 +1,29 @@
+class Solution {          //bfs
+  public:
+    // Function to return Breadth First Traversal of given graph.
+    vector<int> bfsOfGraph(int V, vector<int> adj[]) {
+        // Code here
+        int n=V;   //v -> number of nodes
+        int vis[n]={0}; //making a visited array of n size(since 0-based indexing) and initialising it with zero
+        vis[0]=1;  //first element marking as visited
+        //since BFS -> queue data structure -> FIFO
+        queue<int> q;
+        q.push(0);
+        vector<int> bfs;
+        while(!q.empty()){ //jab tak apna queue khali na ho jaye
+            int node=q.front();  //storing front element
+            q.pop(); // remving first element
+            bfs.push_back(node); //storing that first element in our bfs vector
+            
+            //now, iterating adjacency matrix and checking whether the node is visited or not
+            for(auto it: adj[node]){
+                if(!vis[it]){ //if the node is not visited
+                    vis[it]=1; //mark it as visited
+                    q.push(it);  //and push it into the queue
+                }
+            }
+            
+        }
+        return bfs;
+    }
+};
