@@ -6,7 +6,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {            // SEE STRIVERS VIDEO FOR BEST EXPLANATION
+class Solution {            
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         if(headA == NULL  || headB == NULL){
