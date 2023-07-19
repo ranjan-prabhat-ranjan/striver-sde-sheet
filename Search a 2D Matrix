@@ -1,0 +1,28 @@
+class Solution {    
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if(matrix.size()==0){   //if matric is empty   [it can also be written as if(!matrix)]
+            return false;
+        }
+        int n = matrix.size();   //row size
+        int m = matrix[0].size();  //column size
+
+        //performing imaginary binary search across the matrix
+        int low = 0;
+        int high = (n*m)-1;    //high is the imaginary last index         //size=(n*m)
+        while(low<=high){       //performing binary search
+            int mid=(low+(high-low)/2);   //finding the imaginary middle index
+            if(matrix[mid/m][mid%m]==target){  //fiding out the row index and column index of that imaginary mid   i.e. row index = mid/column size   and  column index = mid%column size 
+                return true;
+            }
+            if(matrix[mid/m][mid%m]<target){
+                low=mid+1;    //hence now we'll be doing binary search on the right half
+            }
+            else{   //if(matrix[mid/m][mid%m]>target)
+                high=mid-1;    //hence now we'll be doing binary search on the left half
+            }
+        }
+        return false;  //if our bianry search wss unable to find our element then in this case we'll return false
+
+    }
+};
