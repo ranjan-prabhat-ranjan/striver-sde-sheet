@@ -1,0 +1,28 @@
+class Solution {   
+public:
+    void findCombination(int indices, int target, vector<int>& arr, vector<vector<int>>& ans,vector<int>& ds){
+        if(indices == arr.size()){
+            if(target == 0){
+                ans.push_back(ds);
+            }
+            return;
+        }
+
+        //picking up the element
+        if(arr[indices]<=target){
+            ds.push_back(arr[indices]);
+            findCombination(indices,target-arr[indices],arr,ans,ds);
+            ds.pop_back();
+        }
+        findCombination(indices+1,target,arr,ans,ds);   //this is when we're not picking the element
+    }
+
+
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> ans;
+        vector<int> ds;  //data sructure
+        findCombination(0,target,candidates,ans,ds);  //recursive call   // starting from 0 indices
+        return ans;   
+    }
+};
