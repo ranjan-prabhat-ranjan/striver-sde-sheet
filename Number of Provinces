@@ -1,0 +1,45 @@
+class Solution {   // we can do  this either using BFS or DFS  // here we're doing using BFS
+ // check dfs and bfs solution 
+private:
+    void dfs(int node , vector<int> adjls[], vector<int> &vis){
+        vis[node] = 1; //when we reach ,marking it as 1 i.e. visited
+        for(auto it :  adjls[node]){
+            if(!vis[it]){ //if not visited ,then traversing or calling dfs will be done
+                dfs(it,adjls,vis);
+            }
+        }
+
+    }
+
+
+
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        //vector<vector<int>>& isConnected  (adj) -> here adjacency matrix is given , not the list
+        //since we're solving every problems using adjacency list, so, wi'll convert adj. matrix into list
+
+        int  n = isConnected.size(); // n = V -> number of nodes
+
+        //code to change adjacency matrix to list
+        vector<int> adjls[n] ;//creating adjacency list
+        for(int i=0;i<n;i++){ //since adj. matrix is given , we'll run loops to convert it into the list
+            for(int j=0;j<n;j++){
+                if(isConnected[i][j] == 1  && i!=j){  //adj[i][j]==1 -> means there is a node  ;  i!=j -> make sure that they should not have self nodes
+                    adjls[i].push_back(j);
+                    adjls[j].push_back(i);
+                }
+            }
+        }
+
+        vector<int> vis(n,0); //taking visited matrix and initialising it with 0
+        int count = 0;
+        for(int i=0;i<n;i++){
+            if(!vis[i]){  // if not visited then call the dfs 
+                count++;  //counting provinces
+                dfs(i,adjls,vis);  // i-> starting node
+            }
+        }
+        return count;
+        
+    }
+};
