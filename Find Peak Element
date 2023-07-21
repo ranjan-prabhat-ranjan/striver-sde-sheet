@@ -1,0 +1,30 @@
+class Solution { //BINARY SEARCH APPROACH T.C :  O(log n)In each iteration, the search range is halved, resulting in logarithmic time complexity.
+//The space complexity of the code is O(1) since it uses a constant amount of extra space for the variables start, end, and mid.
+//a peak element is defined as an element that is greater than its neighboring elements.
+  
+public:
+    int findPeakElement(vector<int>& nums) {
+        int start = 0 ;
+        int end = nums.size()-1;
+        while(start<end){
+            int mid = start+(end-start)/2;  // or mid=(start+end)/2; 
+            if(mid==0){  //special case 1 :  If mid is the first index, the code checks if the element at index 0 is a peak by comparing it with the element at index 1. If it is greater, it returns 0; otherwise, it returns 1.
+                return nums[0]>=nums[1] ? 0 : 1;
+            }
+            if(mid==end){ //special case 2 : if mid is the last index, the code checks if the element at index end - 1 is a peak by comparing it with the element at index end - 2. If it is greater, it returns end - 1; otherwise, it returns end - 2.
+                return nums[end-1]>=nums[end-2] ? end-1 : end-2;
+            }
+            if(nums[mid]>nums[mid+1] && nums[mid]>nums[mid-1]){  //checks if the element at index mid is a peak by comparing it with its neighboring elements at indices mid + 1 and mid - 1. If it is greater than both neighbors, it is a peak, and the function returns mid.
+                return mid;
+            }
+            if(nums[mid]<nums[mid-1]){  
+                end=mid-1;//as the peak must be on the left side.
+            }
+            else{
+                start=mid+1;// as the peak must be on the right side.
+
+            }
+        }
+        return start;
+    }
+};
