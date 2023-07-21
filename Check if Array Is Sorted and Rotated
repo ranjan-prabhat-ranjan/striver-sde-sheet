@@ -1,0 +1,15 @@
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+        int count = 0;       //0%5=0 1%5=1 2%5=2 3%5=3 4%5=4 5%5=0 
+        for(int i=0;i<nums.size();i++){
+            if(nums[i] > nums[(i+1) % nums.size()]){   // to chech whether array is sorted and rotated or not
+                count++;
+            }
+        }
+        if(count>1){
+            return false;
+        }
+        return true;
+    }
+};
