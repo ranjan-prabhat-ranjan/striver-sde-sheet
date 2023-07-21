@@ -1,0 +1,23 @@
+class Solution {    //BINARY SEARCH ALGORITHM divides the search space in half at each step ,divides the search space in half at each step,The space complexity is O(1) since the algorithm uses only a constant amount of extra space.
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int start = 0;
+        int end = nums.size()-1;
+        int ans = nums.size();
+
+        while(start<=end){
+            int mid = start+(end-start)/2;
+            if(nums[mid]==target){
+                return mid;
+            }
+            else if(nums[mid]<target){
+                start=mid+1;//because the target should be on the right side of the mid index.
+            }
+            else{
+                ans=mid;
+               end=mid-1; //because the target should be on the left side of the mid index.
+            }
+        }
+        return ans;
+    }
+};
