@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int left = 0;   // two pointer appraoach
+        int right = s.size()-1;
+        while(left<right){              //isalnum() is used to check that the character is alphanumeric or not
+            if(!isalnum(s[left])){  //checking that s[left] is not an alphanumeric character
+                left++;
+            }
+            else if(!isalnum(s[right])){  //checking that s[right] is not an alphanumeric character
+                right--;
+            }
+            else if(tolower(s[left])!=tolower(s[right])){  // tolower() and toupper() is used to convert lowercase to uppercase and viceversa
+                return false;
+            }
+            else{
+                left++;
+                right--;
+            }
+
+        }
+        return true;
+    }
+};
