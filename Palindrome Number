@@ -1,0 +1,12 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        string str = to_string(x);
+        string check = str;
+        reverse(check.begin(),check.end());
+        if(str == check){
+            return true;
+        }
+        else return false;
+    }
+};
