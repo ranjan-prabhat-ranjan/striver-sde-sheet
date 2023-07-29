@@ -7,7 +7,7 @@ public:
     //t.c: 2^(m*n)  s.c:O(path length)=O(m-1 + n-1)
     //TLE because of exponential t.c //hence we'll use memoization to resolve tle
     int f(int i,int j){
-            if(i==0 || j==0) return 1;
+            if(i==0 && j==0) return 1;
             if(i<0 || j<0) return 0;
             int up=f(i-1,j);
             int left=f(i,j-1);
@@ -24,7 +24,7 @@ public:
     //using recursion + memoization(to resove TLE)
     //t.c:O(n*m) //s.c:O(m-1 + n-1) + O(n*m) -> path length + dp array
     int f(int i,int j, vector<vector<int>> &dp){
-            if(i==0 || j==0) return 1;
+            if(i==0 && j==0) return 1;
             if(i<0 || j<0) return 0;
 
             if(dp[i][j]!=-1) return dp[i][j];
