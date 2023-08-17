@@ -1,0 +1,58 @@
+class Solution {  //BFS approach  
+public:
+
+// steps
+//1.make a result vector and put -1 in it
+//2.store coordinates of all 0's 
+//3.and hit BFS from those coordinates
+//4.keep updating the result
+     //choices of going from (i,j) ->  right, left, top, bottom
+     //restrictions: //out of bound nhi hona chahiye
+                     // result == -1 hona chahiye
+
+
+//t.c -> O(m*n)
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int m=mat.size();  //row
+        int n=mat[0].size(); //col
+
+        vector<vector<int>> directions{{0,1},{0,-1},{1,0},{-1,0}};  //direction array for neighbours i.e right, left, top, bottom
+        queue<pair<int,int>> que;
+        vector<vector<int>> result(m,vector<int>(n,-1)); //making all element = -1 of the result vector  //means; abhi kisi ka bhi answer nhi find kiya hai
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(mat[i][j]==0){ 
+                    result[i][j]=0;
+                    que.push({i,j});  //from these coordinates we've to hit bfs
+                }
+            }
+        }
+        while(!que.empty()){
+            pair<int,int> p=que.front();
+            que.pop();
+
+            //current coordinates
+            int i=p.first;
+            int j=p.second;
+
+            for(auto &dir : directions){   //to traversing neighbours
+                //coordinates where we can go
+                int new_i = i+dir[0];  //dir[0]->x-coordinaate  //since dir store {x-coordinate,y-coordinate}
+                int new_j = j+dir[1];  ////dir[1]->y-coordinaate
+
+                if(new_i>=0 && new_i<m && new_j>=0 && new_j<n && result[new_i][new_j]==-1){  //checking boundary conditions
+                    result[new_i][new_j] = result[i][j]+1;
+                    que.push({new_i,new_j});  //pushing that coordinate into the queue so that we can further traverse into their neighbours
+                }
+
+            }
+        }
+        return result;
+    }
+};
+
+
+
+
+//yt:codestorywithMik
