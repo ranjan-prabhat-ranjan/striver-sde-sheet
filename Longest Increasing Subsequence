@@ -1,0 +1,77 @@
+class Solution {  //strivers
+public:
+
+    
+    /*
+    //recursion
+    //t.c -> O(2^n)
+    //s.c -> O(N)(auxiliary recursion stack space)
+    int f(int ind, int prev_index, vector<int>& nums, int n){
+
+        if(ind == n)
+            return 0;
+
+        int len = 0 + f(ind + 1, prev_index, nums, n);  //not take
+
+        if(prev_index == -1 || nums[ind]>nums[prev_index]){
+            len = max(len, 1 + f(ind + 1, ind, nums, n));  //take
+        }
+
+        return len;
+    }
+
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        return f(0,-1,nums,n);
+    }
+*/
+
+/*
+    //memoization
+    //t.c -> O(N*N)
+    //s.c -> O(N*N) + O(N)(auxiliary recursion stack space)
+    int f(int ind, int prev_index, vector<int>& nums, int n, vector<vector<int>> &dp){
+
+        if(ind == n)
+            return 0;
+
+        if(dp[ind][prev_index+1]!=-1) return dp[ind][prev_index+1];
+
+        int len = 0 + f(ind + 1, prev_index, nums, n, dp);  //not take
+
+        if(prev_index == -1 || nums[ind]>nums[prev_index]){
+            len = max(len, 1 + f(ind + 1, ind, nums, n, dp));  //take
+        }
+
+        return dp[ind][prev_index+1]=len;
+    }
+
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n,vector<int>(n+1,-1));  //coordinate shift 0f second parameter ; so we'll just add 1 in that 2nd parameter
+        return f(0,-1,nums,n,dp);
+    }
+*/
+
+    //tabulation
+    //t.c -> O(N*N)
+    //s.c -> O(N)(auxiliary recursion stack space)
+  
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        for(int ind=n-1;ind>=0;ind--){
+            for(int prev_index=ind-1;prev_index>=-1;prev_index--){
+
+                int len = 0 + dp[ind+1][prev_index+1];  //not take
+
+                if(prev_index == -1 || nums[ind]>nums[prev_index]){
+                    len = max(len, 1 + dp[ind+1][ind+1]);  //take
+                }
+
+                dp[ind][prev_index+1]=len;
+            }
+        }
+        return dp[0][-1+1];
+    }
+};
